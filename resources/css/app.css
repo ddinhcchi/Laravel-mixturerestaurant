@@ -1,0 +1,34 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+@media (min-width: 768px) {
+    .md\:pl-256 {
+        margin-left: 256px;
+    }
+
+    .md\:ml-2\/3{
+        margin-left: calc(41%);
+    }
+}
+
+.mt-1\/2 {
+    margin-top: calc(50%);
+}
+
+.swiper {
+    width: 240px;
+    height: 320px;
+    z-index: 1000;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+.hover\:scale-200:hover {
+    --tw-scale-x: 2.0;
+    --tw-scale-y: 2.0;
+    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+  }
+
