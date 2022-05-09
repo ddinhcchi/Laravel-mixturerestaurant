@@ -85,6 +85,35 @@ class BillController extends Controller
         return to_route('admin.tables.bill')->with('success', 'Thanh toán thành công.');
     }
 
+    public function show(int $year, int $month, int $day){
+        $years = DB::select('select DISTINCT YEAR(created_at) AS YEAR FROM `bills` WHERE `Status` = 1');
+        $months = DB::select('select DISTINCT MONTH(created_at) AS MONTH FROM `bills` WHERE `Status` = 1 AND YEAR(created_at) = ?', [$year]);
+        $days = NULL;
+
+        if($day == 0){
+            if($month == 0){
+                $bills = DB::select('select * from `bills` where YEAR(created_at) = ?', [$year]);
+            }
+            else {
+                $bills = DB::select('select * from `bills` where YEAR(created_at) = ? AND MONTH(created_at) = ?', [$year, $month]);
+                $days = DB::select('select DISTINCT DAY(created_at) AS DAY FROM `bills` WHERE `Status` = 1 AND YEAR(created_at) = ? AND MONTH(created_at) = ?', [$year, $month]);
+            }
+        }
+        else {
+            $bills = DB::select('select * from `bills` where YEAR(created_at) = ? AND MONTH(created_at) = ? AND DAY(created_at) = ?', [$year, $month, $day]);
+            $days = DB::select('select DISTINCT DAY(created_at) AS DAY FROM `bills` WHERE `Status` = 1 AND YEAR(created_at) = ? AND MONTH(created_at) = ?', [$year, $month]);
+        }
+
+        return view('admin.invoices.showbills', compact('years', 'months', 'days', 'bills', 'year', 'month', 'day'));
+    }
+
+    public function showdetail(Bill $bill, int $year, int $month, int $day){
+        $BillInfos = DB::select('select * from `bill__infos` where `idBill` = ?', [$bill->id]);
+
+        $table = DB::select('select * from `tables` where `id` = ?', [$bill->IdTable]);
+
+        return view('admin.invoices.showbilldetail', compact('bill', 'year', 'month', 'day', 'BillInfos', 'table'));
+    }
     /**
      * Show the form for creating a new resource.
      *

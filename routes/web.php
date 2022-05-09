@@ -47,7 +47,9 @@ Route::middleware(['auth', 'admin'])->name('admin.')->prefix('admin')->group(fun
     Route::put('/invoice/paid/{billid}', [BillController::class, 'pay'])->name('bill.invoice.paid');
     Route::put('/comment/{commentid}', [CommentController::class, 'change'])->name('comment.change');
     Route::get('/comment', [CommentController::class, 'index'])->name('comment.index');
-    Route::get('/revenue/{year}', [RevenueController::class, 'index'])->name('revenue.index');
+    Route::get('/revenue/{year}/{month}', [RevenueController::class, 'index'])->name('revenue.index');
+    Route::get('/showbill/{year}/{month}/{day}', [BillController::class, 'show'])->name('showbills');
+    Route::get('/showbilldetails/{bill}/{year}/{month}/{day}', [BillController::class, 'showdetail'])->name('showbilldetail');
 });
 
 require __DIR__ . '/auth.php';

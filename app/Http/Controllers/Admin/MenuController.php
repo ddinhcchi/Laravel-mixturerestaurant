@@ -32,7 +32,24 @@ class MenuController extends Controller
 
         $BillExist = DB::select('select * from bills where IdTable = ? and Status = ?', [$table->id, 0]);
 
-        for ($s = '', $i = 0, $z = strlen($a = 'abcdefghijklmnopqrstuvwxyz0123456789')-1; $i != 6; $x = rand(0,$z), $s .= $a[$x], $i++);
+        $AllBill = DB::select('select * from bills');
+        
+        //Kiem tra trung ma comment
+        $check1 = false;
+        while (!$check1){
+            $check2 = true;
+            for ($s = '', $i = 0, $z = strlen($a = 'abcdefghijklmnopqrstuvwxyz0123456789')-1; $i != 6; $x = rand(0,$z), $s .= $a[$x], $i++);
+            foreach($AllBill as $bl){
+                if ($s == $bl->CommentCode) {
+                    $check2=false;
+                    break;
+                }
+            }
+
+            if ($check2) {
+                $check1 = true;
+            } 
+        }
 
         if ($BillExist == NULL) {
             $bill = Bill::create([

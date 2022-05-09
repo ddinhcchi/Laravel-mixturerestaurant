@@ -60,11 +60,15 @@
                     :active="request()->routeIs('admin.tables.bill')">
                     {{ __('Thanh toán') }}
                 </x-admin-nav-link>
+                <x-admin-nav-link :href="route('admin.showbills', [2022, 0, 0])"
+                    :active="request()->routeIs('admin.showbills')">
+                    {{ __('Hóa đơn') }}
+                </x-admin-nav-link>
                 <x-admin-nav-link :href="route('admin.comment.index')"
                     :active="request()->routeIs('admin.comment.index')">
                     {{ __('Đánh giá') }}
                 </x-admin-nav-link>
-                <x-admin-nav-link :href="route('admin.revenue.index', [2022])"
+                <x-admin-nav-link :href="route('admin.revenue.index', [2022, 0])"
                     :active="request()->routeIs('admin.revenue.index')">
                     {{ __('Doanh thu') }}
                 </x-admin-nav-link>
